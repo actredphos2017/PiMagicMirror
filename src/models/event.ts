@@ -1,4 +1,4 @@
 export interface ExternalEvent {
     event: string;
-    data: any
+    data?: any
 }

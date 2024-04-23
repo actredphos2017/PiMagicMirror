@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from 'electron'
+import {app, BrowserWindow} from 'electron'
 
 app.whenReady().then(() => {
     const mainWindow = new BrowserWindow({

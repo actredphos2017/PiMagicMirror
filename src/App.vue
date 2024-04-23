@@ -1,20 +1,22 @@
 <script setup lang="ts">
 
 import DynamicComponent from "./layouts/DynamicComponent.vue";
-import {Compose} from "./models/compose.ts";
+import {useCurrentProfileStore} from "./plugins/store.ts";
+import {computed} from "vue";
 
-const testStructure: Compose[] = [
-  {id: 'clock'},
-  {id: 'calendar'}
-]
+const currentProfile = useCurrentProfileStore();
+
+const composeStructure = computed(() => currentProfile.profile.setting.compose_structure)
+
+const displayOpacity = computed(() => currentProfile.panelDisplay ? "100%" : "0")
 
 </script>
 
 <template>
   <div class="main-container">
     <div class="compose-area-container">
-      <dynamic-component :structure="testStructure"/>
-      <dynamic-component :structure="testStructure"/>
+      <dynamic-component :structure="composeStructure.left"/>
+      <dynamic-component :structure="composeStructure.right"/>
     </div>
     <div class="notify-area-container">
       Hello World
@@ -31,6 +33,8 @@ const testStructure: Compose[] = [
   padding: 64px 0;
   flex-direction: column;
   justify-content: space-between;
+  transition: all 0.5s;
+  opacity: v-bind(displayOpacity);
 }
 
 .compose-area-container {
