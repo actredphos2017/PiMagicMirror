@@ -4,3 +4,24 @@ body {
   background: black;
   color: white;
 }
+
+.main-content-font {
+  font-weight: lighter;
+  font-size: xxx-large;
+}
+
+.secondary-content-font {
+  font-weight: lighter;
+  font-size: x-large;
+}
+
+.small-content-font {
+  font-weight: lighter;
+  font-size: large;
+}
+
+.mini-content-font {
+  font-weight: lighter;
+  font-size: smaller;
+}
+
