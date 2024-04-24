@@ -73,23 +73,23 @@ onUnmounted(() => {
         {{ isPM ? "下午" : "上午" }}
       </div>
       <div style="display: flex; gap: 6px; align-items: center">
-        <div class="conspicuous-font">
+        <div class="main-content-font">
           {{ hours }}
         </div>
-        <div class="small-font">:</div>
-        <div class="conspicuous-font">
+        <div class="small-content-font">:</div>
+        <div class="main-content-font">
           {{ minutes }}
         </div>
       </div>
-      <div class="small-font">
+      <div class="small-content-font">
         {{ seconds }}
       </div>
     </div>
     <div style="display: flex; gap: 2px">
-      <div class="small-font">
+      <div class="small-content-font">
         {{ dateView }}
       </div>
-      <div class="small-font">
+      <div class="small-content-font">
         {{ weekdayView }}
       </div>
     </div>
@@ -98,15 +98,5 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
-
-.conspicuous-font {
-  font-weight: lighter;
-  font-size: xxx-large;
-}
-
-.small-font {
-  font-weight: lighter;
-  font-size: large;
-}
 
 </style>
