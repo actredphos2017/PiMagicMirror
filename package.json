@@ -9,10 +9,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@popperjs/core": "^2.11.8",
     "electron": "^30.0.1",
     "electron-builder": "^24.13.3",
     "electron-devtools-installer": "^3.2.0",
     "pinia": "^2.1.7",
+    "v-calendar": "^3.1.2",
     "vite-plugin-electron": "^0.28.6",
     "vue": "^3.4.21"
   },
