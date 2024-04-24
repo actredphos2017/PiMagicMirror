@@ -11,13 +11,18 @@ interface WeatherUpdateResult {
 }
 
 const eventRouter: EventRouter = {
+    ENVIRONMENT_ACTIVE() {
+        useCurrentProfileStore().updateEnvironment(true)
+    },
+    ENVIRONMENT_SILENT() {
+        useCurrentProfileStore().updateEnvironment(false)
+    },
     FACE_ENTER(data) {
-        console.log(data)
         useCurrentProfileStore().updateProfile(data as UserProfile)
-        useCurrentProfileStore().updateDisplayable(true)
+
     },
     FACE_LEAVE() {
-        useCurrentProfileStore().updateDisplayable(false)
+        useCurrentProfileStore().updateProfile(undefined)
     },
     ASSISTANT_BEGIN() {
 
@@ -38,15 +43,36 @@ const eventRouter: EventRouter = {
         } else {
             console.error(`Weather Update Failed With Status Code: ${data.result}`)
         }
-    }
+    },
 }
 
 export function routeExternalEvent(event: ExternalEvent) {
+    console.log("Receive Event:", event.event)
     const fun = eventRouter[event.event];
     if (!fun) return;
     fun(event.data);
 }
 
-export function sendExternalEvent(event: ExternalEvent) {
-    useAsyncConnectionStore().websocket?.send(JSON.stringify(event))
+let eventQueue: ExternalEvent[] = [];
+
+let pollingInterval: NodeJS.Timeout | undefined = undefined
+
+export function sendExternalEvent(event?: ExternalEvent) {
+    const asyncConnection = useAsyncConnectionStore();
+    if (asyncConnection.websocket?.readyState === 1) {
+        while (eventQueue.length > 0) {
+            console.log("Send Event(From Queue):", eventQueue[0].event)
+            asyncConnection.websocket.send(JSON.stringify(eventQueue[0]))
+            eventQueue = eventQueue.slice(1)
+        }
+        if (event) {
+            console.log("Send Event:", event.event)
+            asyncConnection.websocket.send(JSON.stringify(event))
+        }
+    } else {
+        if (event) eventQueue.push(event)
+        if (!pollingInterval) {
+            pollingInterval = setInterval(() => sendExternalEvent(), 5000);
+        }
+    }
 }

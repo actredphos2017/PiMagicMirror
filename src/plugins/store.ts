@@ -7,25 +7,20 @@ import {Comprehensive} from "../models/caiyunapi/comprehensive.ts";
 export const useCurrentProfileStore = defineStore({
     id: "currentProfile",
     state: () => ({
-        panelDisplay: false,
-        profile: {
-            create_date: "",
-            faceid: "",
-            nickname: "",
-            setting: {
-                compose_structure: {
-                    left: [],
-                    right: []
-                }
-            }
-        } as UserProfile
+        environmentActive: false,
+        profile: undefined as undefined | UserProfile
     }),
     actions: {
-        updateProfile(profile: UserProfile) {
+        updateProfile(profile: UserProfile | undefined) {
             this.profile = profile
         },
-        updateDisplayable(displayable: boolean) {
-            this.panelDisplay = displayable
+        updateEnvironment(displayable: boolean) {
+            this.environmentActive = displayable
+        }
+    },
+    getters: {
+        panelDisplay(): boolean {
+            return this.environmentActive
         }
     }
 })

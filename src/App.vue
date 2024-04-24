@@ -2,21 +2,41 @@
 
 import DynamicComponent from "./layouts/DynamicComponent.vue";
 import {useCurrentProfileStore} from "./plugins/store.ts";
-import {computed} from "vue";
+import {computed, onMounted} from "vue";
+import {sendExternalEvent} from "./utils/eventbus.ts";
+import {Compose} from "./models/compose.ts";
 
 const currentProfile = useCurrentProfileStore();
 
-const composeStructure = computed(() => currentProfile.profile.setting.compose_structure)
+const composeStructure = computed(() => currentProfile.profile?.setting.compose_structure)
 
-const displayOpacity = computed(() => currentProfile.panelDisplay ? "100%" : "0")
+const displayOpacity = computed(() => currentProfile.panelDisplay ? "100%" : "0");
+
+const defaultLeft: Compose[] = [
+  {
+    id: "clock"
+  },
+  {
+    id: "calendar"
+  }
+]
+const defaultRight: Compose[] = [
+  {
+    id: "weather"
+  }
+]
+
+onMounted(() => {
+  sendExternalEvent({event: "VIEW_CHECK_ENVIRONMENT"});
+});
 
 </script>
 
 <template>
   <div class="main-container">
     <div class="compose-area-container">
-      <dynamic-component :structure="composeStructure.left"/>
-      <dynamic-component :structure="composeStructure.right"/>
+      <dynamic-component :structure="composeStructure?.left ?? defaultLeft"/>
+      <dynamic-component :structure="composeStructure?.right ?? defaultRight"/>
     </div>
     <div class="notify-area-container">
       Hello World
