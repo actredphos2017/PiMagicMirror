@@ -37,7 +37,7 @@ const composes = computed(() => toComposeComponents(props.structure));
 
 .compose-wrapper {
   width: 400px;
-  height: 200px;
+  height: 247px;
   padding: 12px;
   border: #5b5b5b 1px solid;
   border-radius: 12px;
