@@ -26,7 +26,7 @@ export function formatDate(secondTimeMill: number | Date) {
         date.getMonth() == nowDate.getMonth() &&
         date.getDate() == nowDate.getDate()
     ) {
-        return `${date.getHours()}:${date.getMinutes()}`;
+        return getTimeRoundToMinuteString(date);
     }
 
     nowDate.setDate(nowDate.getDate() - 1);

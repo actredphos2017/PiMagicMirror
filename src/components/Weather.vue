@@ -50,9 +50,9 @@ const region = computed(() => weatherInfo.value?.result.alert.adcodes.map(e => e
 
 <template>
   <div v-if="weatherInfo" class="weather-card-container">
-    <div style="display: flex; flex-direction: column; align-items: center">
+    <div style="display: flex; flex-direction: column; align-items: center;">
       <div class="small-content-font">
-        {{ region }} 天气信息
+        {{ region }}
       </div>
       <div class="mini-content-font">
         {{ formatDate(weatherInfo.server_time) }} 更新
@@ -108,7 +108,7 @@ const region = computed(() => weatherInfo.value?.result.alert.adcodes.map(e => e
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
 }
 
 .page {
