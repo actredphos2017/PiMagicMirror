@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 import {Compose, toComposeComponents} from "../models/compose.ts";
 import {computed} from "vue";
 

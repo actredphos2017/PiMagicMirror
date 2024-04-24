@@ -1,72 +1,19 @@
 <script setup lang="ts">
-
-import DynamicComponent from "./layouts/DynamicComponent.vue";
-import {useCurrentProfileStore} from "./plugins/store.ts";
-import {computed, onMounted} from "vue";
-import {sendExternalEvent} from "./utils/eventbus.ts";
-import {Compose} from "./models/compose.ts";
-
-const currentProfile = useCurrentProfileStore();
-
-const composeStructure = computed(() => currentProfile.profile?.setting.compose_structure)
-
-const displayOpacity = computed(() => currentProfile.panelDisplay ? "100%" : "0");
-
-const defaultLeft: Compose[] = [
-  {
-    id: "clock"
-  },
-  {
-    id: "calendar"
-  }
-]
-const defaultRight: Compose[] = [
-  {
-    id: "weather"
-  }
-]
-
-onMounted(() => {
-  sendExternalEvent({event: "VIEW_CHECK_ENVIRONMENT"});
-});
+import MainPanel from "./layouts/MainPanel.vue";
+import AssistantPanel from "./layouts/AssistantPanel.vue";
 
 </script>
 
 <template>
-  <div class="main-container">
-    <div class="compose-area-container">
-      <dynamic-component :structure="composeStructure?.left ?? defaultLeft"/>
-      <dynamic-component :structure="composeStructure?.right ?? defaultRight"/>
-    </div>
-    <div class="notify-area-container">
-      Hello World
-    </div>
-  </div>
+  <MainPanel class="panel-container"/>
+  <AssistantPanel class="panel-container"/>
 </template>
 
 <style scoped>
 
-.main-container {
+.panel-container {
   width: 100%;
   height: 100vh;
-  display: flex;
-  padding: 64px 0;
-  flex-direction: column;
-  justify-content: space-between;
-  transition: all 0.5s;
-  opacity: v-bind(displayOpacity);
-}
-
-.compose-area-container {
-  width: calc(100% - 128px);
-  margin: 0 64px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.notify-area-container {
-  width: calc(100% - 128px);
-  margin: 0 64px;
 }
 
 </style>

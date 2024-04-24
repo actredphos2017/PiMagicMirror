@@ -3,24 +3,31 @@ import {routeExternalEvent, sendExternalEvent} from "../utils/eventbus.ts";
 import {ExternalEvent} from "../models/event.ts";
 import {UserProfile} from "../models/custom.ts";
 import {Comprehensive} from "../models/caiyunapi/comprehensive.ts";
+import {QASessionQueue} from "../models/assistant.ts";
 
 export const useCurrentProfileStore = defineStore({
     id: "currentProfile",
     state: () => ({
-        environmentActive: false,
-        profile: undefined as undefined | UserProfile
+        environment: {
+            active: false,
+            profile: undefined as undefined | UserProfile,
+        },
+        assistant: {
+            active: false,
+            sessionQueue: new QASessionQueue()
+        }
     }),
     actions: {
         updateProfile(profile: UserProfile | undefined) {
-            this.profile = profile
+            this.environment.profile = profile
         },
         updateEnvironment(displayable: boolean) {
-            this.environmentActive = displayable
+            this.environment.active = displayable
         }
     },
     getters: {
-        panelDisplay(): boolean {
-            return this.environmentActive
+        mainPanelDisplay(): boolean {
+            return this.environment.active && !this.assistant.active
         }
     }
 })

@@ -32,3 +32,17 @@ export const toComposeComponent = (compose: Compose) => ({
 } as ComposeComponent);
 
 export const toComposeComponents = (composes: Compose[]) => composes.map(toComposeComponent);
+
+export const defaultLeft: Compose[] = [
+    {
+        id: "clock"
+    },
+    {
+        id: "calendar"
+    }
+]
+export const defaultRight: Compose[] = [
+    {
+        id: "weather"
+    }
+]

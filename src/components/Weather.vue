@@ -22,7 +22,7 @@ async function switchInfoDisplay() {
   pagesStatus.value[currentPage] = true;
 }
 
-watch(() => useCurrentProfileStore().panelDisplay, v => {
+watch(() => useCurrentProfileStore().mainPanelDisplay, v => {
   if (v) {
     useWeatherStore().hintUpdate();
     if (switcher == undefined) switcher = setInterval(switchInfoDisplay, 4000);

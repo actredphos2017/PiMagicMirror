@@ -2,6 +2,7 @@ import {ExternalEvent} from "../models/event.ts";
 import {useAsyncConnectionStore, useCurrentProfileStore, useWeatherStore} from "../plugins/store.ts";
 import {UserProfile} from "../models/custom.ts";
 import {Comprehensive} from "../models/caiyunapi/comprehensive.ts";
+import {AnswerContent, AskContent} from "../models/assistant.ts";
 
 type EventRouter = { [eventName: string]: ((data: any) => void) }
 
@@ -17,24 +18,26 @@ const eventRouter: EventRouter = {
     ENVIRONMENT_SILENT() {
         useCurrentProfileStore().updateEnvironment(false)
     },
-    FACE_ENTER(data) {
-        useCurrentProfileStore().updateProfile(data as UserProfile)
-
+    FACE_ENTER(data: UserProfile) {
+        useCurrentProfileStore().updateProfile(data)
     },
     FACE_LEAVE() {
         useCurrentProfileStore().updateProfile(undefined)
     },
     ASSISTANT_BEGIN() {
-
+        useCurrentProfileStore().assistant.active = true
     },
-    ASSISTANT_ASK() {
-
+    ASSISTANT_ASK(data: AskContent) {
+        useCurrentProfileStore().assistant.active = true
+        useCurrentProfileStore().assistant.sessionQueue.putAsk(data)
     },
-    ASSISTANT_ANSWER() {
-
+    ASSISTANT_ANSWER(data: AnswerContent) {
+        useCurrentProfileStore().assistant.active = true
+        useCurrentProfileStore().assistant.sessionQueue.putAnswer(data)
     },
     ASSISTANT_CLOSE() {
-
+        useCurrentProfileStore().assistant.active = false
+        useCurrentProfileStore().assistant.sessionQueue.clear()
     },
     WEATHER_UPDATE(data: WeatherUpdateResult) {
         if (data.available) {
