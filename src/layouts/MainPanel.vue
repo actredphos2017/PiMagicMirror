@@ -33,25 +33,27 @@ onMounted(() => {
 
 .main-panel-container {
   width: 100%;
-  height: 100%;
-  display: flex;
+  height: calc(100% - 128px);
   padding: 64px 0;
+
+  display: flex;
   flex-direction: column;
   justify-content: space-between;
-  transition: all 0.5s;
+
+  transition: opacity 0.5s;
   opacity: v-bind(mainPanelDisplayOpacity);
 }
 
 .compose-area-container {
   width: calc(100% - 128px);
   margin: 0 64px;
+
   display: flex;
   justify-content: space-between;
 }
 
 .notify-area-container {
-  width: calc(100% - 128px);
-  margin: 0 64px;
+  width: 100%;
 }
 
 </style>

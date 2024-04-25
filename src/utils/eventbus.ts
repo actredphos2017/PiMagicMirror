@@ -26,18 +26,25 @@ const eventRouter: EventRouter = {
     },
     ASSISTANT_BEGIN() {
         useCurrentProfileStore().assistant.active = true
+        useCurrentProfileStore().assistant.expression = "normal"
     },
     ASSISTANT_ASK(data: AskContent) {
         useCurrentProfileStore().assistant.active = true
-        useCurrentProfileStore().assistant.sessionQueue.putAsk(data)
+        useCurrentProfileStore().putAsk(data)
+        if (data.end)
+            useCurrentProfileStore().assistant.expression = "thinking"
     },
     ASSISTANT_ANSWER(data: AnswerContent) {
         useCurrentProfileStore().assistant.active = true
-        useCurrentProfileStore().assistant.sessionQueue.putAnswer(data)
+        useCurrentProfileStore().putAnswer(data)
+        useCurrentProfileStore().assistant.expression = "talking"
+    },
+    ASSISTANT_WAITING() {
+        useCurrentProfileStore().assistant.expression = "waiting"
     },
     ASSISTANT_CLOSE() {
         useCurrentProfileStore().assistant.active = false
-        useCurrentProfileStore().assistant.sessionQueue.clear()
+        useCurrentProfileStore().clearQA()
     },
     WEATHER_UPDATE(data: WeatherUpdateResult) {
         if (data.available) {

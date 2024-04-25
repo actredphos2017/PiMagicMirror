@@ -1,15 +1,35 @@
 <script setup lang="ts">
 import {computed} from "vue";
 import {useCurrentProfileStore} from "../plugins/store.ts";
+import AssistantFace from "../components/AssistantFace.vue";
 
 const currentProfile = useCurrentProfileStore();
-const assistantPanelDisplayOpacity = computed(() => currentProfile.assistant.active)
+const assistantActive = computed(() => currentProfile.assistant.active)
+const assistantPanelDisplayOpacity = computed(() => assistantActive.value ? "100%" : "0")
+const assistantQAQueue = computed(() => currentProfile.assistant.qaQueue)
+
+const rippleAnimationClass = computed(() => assistantActive.value ? ["ripple-with-animation"] : [])
 
 </script>
 
 <template>
   <div class="assistant-panel-container">
-    Hello!
+
+    <div v-for="qa in assistantQAQueue" style="display: flex; flex-direction: column; align-items: center">
+      <div>
+        {{ qa.ask.content }}
+      </div>
+      <div v-if="qa.answer">
+        {{ qa.answer.content }}
+      </div>
+    </div>
+    <!--  Animation  -->
+    <div style="width: 100%; height: 100%; position: fixed; display: flex; align-items: center; justify-content: center">
+      <div class="ripple-default" :class="rippleAnimationClass"/>
+    </div>
+    <div style="width: 100%; height: 100%; position: fixed; display: flex; align-items: center; justify-content: center">
+      <AssistantFace/>
+    </div>
   </div>
 </template>
 
@@ -17,13 +37,41 @@ const assistantPanelDisplayOpacity = computed(() => currentProfile.assistant.act
 
 .assistant-panel-container {
   width: 100%;
-  height: 100%;
-  display: flex;
+  height: calc(100% - 128px);
   padding: 64px 0;
+
+  display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  transition: all 0.5s;
+  justify-content: space-around;
+  align-items: center;
+
+  transition: opacity 0.5s;
   opacity: v-bind(assistantPanelDisplayOpacity);
+}
+
+.ripple-default {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+}
+
+.ripple-with-animation {
+  animation: ripple-animation 2s linear;
+  animation-iteration-count: 1;
+
+}
+
+@keyframes ripple-animation {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0.5) 80%, rgba(255, 255, 255, 0) 100%);
+  }
+  100% {
+    transform: scale(10);
+    opacity: 0;
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0.5) 80%, rgba(255, 255, 255, 0) 100%);
+  }
 }
 
 </style>

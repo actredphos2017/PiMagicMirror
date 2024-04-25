@@ -3,7 +3,7 @@ import {routeExternalEvent, sendExternalEvent} from "../utils/eventbus.ts";
 import {ExternalEvent} from "../models/event.ts";
 import {UserProfile} from "../models/custom.ts";
 import {Comprehensive} from "../models/caiyunapi/comprehensive.ts";
-import {QASessionQueue} from "../models/assistant.ts";
+import {AnswerContent, AskContent, AssistantExpression, QASession} from "../models/assistant.ts";
 
 export const useCurrentProfileStore = defineStore({
     id: "currentProfile",
@@ -14,7 +14,8 @@ export const useCurrentProfileStore = defineStore({
         },
         assistant: {
             active: false,
-            sessionQueue: new QASessionQueue()
+            qaQueue: [] as QASession[],
+            expression: "normal" as AssistantExpression
         }
     }),
     actions: {
@@ -23,6 +24,20 @@ export const useCurrentProfileStore = defineStore({
         },
         updateEnvironment(displayable: boolean) {
             this.environment.active = displayable
+        },
+        putAsk(ask: AskContent) {
+            if (this.assistant.qaQueue.length == 0 || this.assistant.qaQueue[this.assistant.qaQueue.length - 1].ask.end) {
+                this.assistant.qaQueue.push({ask});
+            } else {
+                this.assistant.qaQueue[this.assistant.qaQueue.length - 1].ask = ask;
+            }
+        },
+        putAnswer(answer: AnswerContent) {
+            if (this.assistant.qaQueue.length > 0)
+                this.assistant.qaQueue[this.assistant.qaQueue.length - 1].answer = answer;
+        },
+        clearQA() {
+            this.assistant.qaQueue = []
         }
     },
     getters: {
