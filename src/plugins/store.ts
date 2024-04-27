@@ -15,7 +15,8 @@ export const useCurrentProfileStore = defineStore({
         assistant: {
             active: false,
             qaQueue: [] as QASession[],
-            expression: "normal" as AssistantExpression
+            expression: "normal" as AssistantExpression,
+            volume: [0, 0, 0, 0, 0, 0, 0, 0] as [number, number, number, number, number, number, number, number]
         }
     }),
     actions: {
@@ -37,7 +38,12 @@ export const useCurrentProfileStore = defineStore({
                 this.assistant.qaQueue[this.assistant.qaQueue.length - 1].answer = answer;
         },
         clearQA() {
-            this.assistant.qaQueue = []
+            this.assistant.qaQueue = [{
+                ask: {
+                    content: "",
+                    end: false
+                }
+            }]
         }
     },
     getters: {

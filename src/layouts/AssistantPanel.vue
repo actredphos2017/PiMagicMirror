@@ -2,6 +2,7 @@
 import {computed} from "vue";
 import {useCurrentProfileStore} from "../plugins/store.ts";
 import AssistantFace from "../components/AssistantFace.vue";
+import ThinkingPoints from "../components/ThinkingPoints.vue";
 
 const currentProfile = useCurrentProfileStore();
 const assistantActive = computed(() => currentProfile.assistant.active)
@@ -14,26 +15,40 @@ const rippleAnimationClass = computed(() => assistantActive.value ? ["ripple-wit
 
 <template>
   <div class="assistant-panel-container">
-
     <div v-for="qa in assistantQAQueue" style="display: flex; flex-direction: column; align-items: center">
       <div>
-        {{ qa.ask.content }}
+        <span>
+          {{ qa.ask.content }}
+        </span>
+        <span v-if="!qa.ask.end">
+          <ThinkingPoints/>
+        </span>
       </div>
       <div v-if="qa.answer">
         {{ qa.answer.content }}
       </div>
     </div>
     <!--  Animation  -->
-    <div style="width: 100%; height: 100%; position: fixed; display: flex; align-items: center; justify-content: center">
+    <div class="assistant-face-container">
       <div class="ripple-default" :class="rippleAnimationClass"/>
     </div>
-    <div style="width: 100%; height: 100%; position: fixed; display: flex; align-items: center; justify-content: center">
+    <div class="assistant-face-container">
       <AssistantFace/>
     </div>
   </div>
 </template>
 
 <style scoped>
+
+.assistant-face-container {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(-100px);
+}
 
 .assistant-panel-container {
   width: 100%;
