@@ -38,12 +38,15 @@ export const useCurrentProfileStore = defineStore({
                 this.assistant.qaQueue[this.assistant.qaQueue.length - 1].answer = answer;
         },
         clearQA() {
-            this.assistant.qaQueue = [{
+            this.assistant.qaQueue = []
+        },
+        startListen() {
+            this.assistant.qaQueue.push({
                 ask: {
                     content: "",
                     end: false
                 }
-            }]
+            })
         }
     },
     getters: {

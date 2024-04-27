@@ -25,9 +25,9 @@ const eventRouter: EventRouter = {
         useCurrentProfileStore().updateProfile(undefined)
     },
     ASSISTANT_BEGIN() {
-        useCurrentProfileStore().clearQA()
         useCurrentProfileStore().assistant.active = true
         useCurrentProfileStore().assistant.expression = "normal"
+        useCurrentProfileStore().startListen()
     },
     ASSISTANT_ASK_VOLUME(data: {volume: [number, number, number, number, number, number, number, number]}) {
         useCurrentProfileStore().assistant.volume = data.volume
@@ -48,6 +48,7 @@ const eventRouter: EventRouter = {
     },
     ASSISTANT_CLOSE() {
         useCurrentProfileStore().assistant.active = false
+        setTimeout(() => useCurrentProfileStore().clearQA(), 600)
     },
     WEATHER_UPDATE(data: WeatherUpdateResult) {
         if (data.available) {

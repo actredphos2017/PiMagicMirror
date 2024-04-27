@@ -411,3 +411,11 @@ export function getDailyInstance(dailyData: DailyData): DailyInstance[] {
 
     return Object.entries(tempRes).map(e => e[1]);
 }
+
+export function limitCurve(limit: number): ((input: number) => number) {
+    const extraAddNum = 1 / limit;
+    return x => {
+        return -(1 / (x + extraAddNum)) + limit
+    }
+}
+

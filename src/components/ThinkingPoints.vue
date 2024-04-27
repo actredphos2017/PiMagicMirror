@@ -2,14 +2,15 @@
 
 import {computed, StyleValue} from "vue";
 import {useCurrentProfileStore} from "../plugins/store.ts";
+import {limitCurve} from "../utils/utils.ts";
 
 
 const currentProfile = useCurrentProfileStore();
 
+const limitCurveFun = limitCurve(40);
+
 function volumeFloatToScale(volumeFloat: number): StyleValue {
-  return {
-    height: `${volumeFloat}px`
-  }
+  return {height: `${limitCurveFun(volumeFloat / 2000)}px`}
 }
 
 const volumeStyles = computed(() => currentProfile.assistant.volume.map(volumeFloatToScale));
@@ -17,7 +18,7 @@ const volumeStyles = computed(() => currentProfile.assistant.volume.map(volumeFl
 </script>
 
 <template>
-  <div style="display: flex; gap: 20px; align-items: center">
+  <div style="display: flex; gap: 6px; align-items: center; height: 40px">
     <div
         v-for="volumeStyle in volumeStyles"
         class="point"
@@ -29,8 +30,8 @@ const volumeStyles = computed(() => currentProfile.assistant.volume.map(volumeFl
 <style scoped>
 
 .point {
-  width: 10px;
-  border-radius: 5px;
+  width: 6px;
+  border-radius: 3px;
   background: white;
   transition: all 0.2s;
   box-shadow: white 0 0 64px;

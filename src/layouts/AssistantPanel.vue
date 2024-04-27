@@ -2,12 +2,11 @@
 import {computed} from "vue";
 import {useCurrentProfileStore} from "../plugins/store.ts";
 import AssistantFace from "../components/AssistantFace.vue";
-import ThinkingPoints from "../components/ThinkingPoints.vue";
+import QAQueueView from "../components/QAQueueView.vue";
 
 const currentProfile = useCurrentProfileStore();
 const assistantActive = computed(() => currentProfile.assistant.active)
 const assistantPanelDisplayOpacity = computed(() => assistantActive.value ? "100%" : "0")
-const assistantQAQueue = computed(() => currentProfile.assistant.qaQueue)
 
 const rippleAnimationClass = computed(() => assistantActive.value ? ["ripple-with-animation"] : [])
 
@@ -15,18 +14,8 @@ const rippleAnimationClass = computed(() => assistantActive.value ? ["ripple-wit
 
 <template>
   <div class="assistant-panel-container">
-    <div v-for="qa in assistantQAQueue" style="display: flex; flex-direction: column; align-items: center">
-      <div>
-        <span>
-          {{ qa.ask.content }}
-        </span>
-        <span v-if="!qa.ask.end">
-          <ThinkingPoints/>
-        </span>
-      </div>
-      <div v-if="qa.answer">
-        {{ qa.answer.content }}
-      </div>
+    <div class="qa-queue-wrapper">
+      <QAQueueView/>
     </div>
     <!--  Animation  -->
     <div class="assistant-face-container">
@@ -40,12 +29,24 @@ const rippleAnimationClass = computed(() => assistantActive.value ? ["ripple-wit
 
 <style scoped>
 
+.qa-queue-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: fixed;
+  bottom: 100px;
+}
+
 .assistant-face-container {
   width: 100%;
   height: 100%;
+  top: 0;
+  left: 0;
   position: fixed;
   display: flex;
-  align-items: center;
+  align-items: start;
+  padding-top: 240px;
   justify-content: center;
   transform: translateY(-100px);
 }
