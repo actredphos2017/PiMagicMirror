@@ -7,9 +7,10 @@ import schedule from "../components/Schedule.vue";
 import note from "../components/Note.vue";
 import weather from "../components/Weather.vue";
 import calendar from "../components/Calendar.vue";
+import greeting from "../components/Greeting.vue";
 
 export const registeredCompose: ComposeRegister = {
-    clock, schedule, note, weather, calendar
+    clock, schedule, note, weather, calendar, greeting
 };
 
 export interface Compose {
@@ -39,10 +40,19 @@ export const defaultLeft: Compose[] = [
     },
     {
         id: "calendar"
+    },
+    {
+        id: "greeting"
     }
 ]
 export const defaultRight: Compose[] = [
     {
         id: "weather"
+    },
+    {
+        id: "note"
+    },
+    {
+        id: "schedule"
     }
 ]
