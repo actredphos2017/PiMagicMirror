@@ -1,6 +1,6 @@
 import {defineStore} from "pinia"
 import {routeExternalEvent, sendExternalEvent} from "../utils/eventbus.ts";
-import {ExternalEvent} from "../models/event.ts";
+import {BluetoothAdvertiseInfo, ExternalEvent} from "../models/event.ts";
 import {UserProfile} from "../models/custom.ts";
 import {Comprehensive} from "../models/caiyunapi/comprehensive.ts";
 import {AnswerContent, AskContent, AssistantExpression, QASession} from "../models/assistant.ts";
@@ -17,6 +17,11 @@ export const useCurrentProfileStore = defineStore({
             qaQueue: [] as QASession[],
             expression: "normal" as AssistantExpression,
             volume: [0, 0, 0, 0, 0, 0, 0, 0] as [number, number, number, number, number, number, number, number]
+        },
+        device: {
+            bluetooth: {
+                advertiseInfo: undefined as undefined | BluetoothAdvertiseInfo
+            }
         }
     }),
     actions: {
@@ -25,6 +30,9 @@ export const useCurrentProfileStore = defineStore({
         },
         updateEnvironment(displayable: boolean) {
             this.environment.active = displayable
+        },
+        updateBluetoothAdvertiseInfo(advertiseInfo: BluetoothAdvertiseInfo) {
+            this.device.bluetooth.advertiseInfo = advertiseInfo
         },
         putAsk(ask: AskContent) {
             if (this.assistant.qaQueue.length == 0 || this.assistant.qaQueue[this.assistant.qaQueue.length - 1].ask.end) {

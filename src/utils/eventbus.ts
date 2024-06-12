@@ -1,4 +1,4 @@
-import {ExternalEvent} from "../models/event.ts";
+import {BluetoothAdvertiseInfo, ExternalEvent} from "../models/event.ts";
 import {useAsyncConnectionStore, useCurrentProfileStore, useWeatherStore} from "../plugins/store.ts";
 import {UserProfile} from "../models/custom.ts";
 import {Comprehensive} from "../models/caiyunapi/comprehensive.ts";
@@ -18,6 +18,10 @@ const eventRouter: EventRouter = {
     ENVIRONMENT_SILENT() {
         useCurrentProfileStore().updateEnvironment(false)
     },
+    BLUETOOTH_ADVERTISE_INFO(data: BluetoothAdvertiseInfo) {
+        console.log("Bluetooth", data)
+        useCurrentProfileStore().updateBluetoothAdvertiseInfo(data)
+    },
     FACE_ENTER(data: UserProfile) {
         useCurrentProfileStore().updateProfile(data)
     },
@@ -29,7 +33,7 @@ const eventRouter: EventRouter = {
         useCurrentProfileStore().assistant.expression = "normal"
         useCurrentProfileStore().startListen()
     },
-    ASSISTANT_ASK_VOLUME(data: {volume: [number, number, number, number, number, number, number, number]}) {
+    ASSISTANT_ASK_VOLUME(data: { volume: [number, number, number, number, number, number, number, number] }) {
         useCurrentProfileStore().assistant.volume = data.volume
     },
     ASSISTANT_ASK(data: AskContent) {
