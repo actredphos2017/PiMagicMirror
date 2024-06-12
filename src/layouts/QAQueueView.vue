@@ -31,7 +31,6 @@ const assistantQAQueue = computed(() => currentProfile.assistant.qaQueue);
       </div>
     </div>
   </div>
-
 </template>
 
 <style scoped>

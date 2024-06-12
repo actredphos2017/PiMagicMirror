@@ -3,7 +3,7 @@ import {defaultLeft, defaultRight} from "../models/compose.ts";
 import {useCurrentProfileStore} from "../plugins/store.ts";
 import {computed, onMounted} from "vue";
 import {sendExternalEvent} from "../utils/eventbus.ts";
-import DynamicComponent from "./DynamicComponent.vue";
+import DynamicComponentColumn from "./DynamicComponentColumn.vue";
 
 const currentProfile = useCurrentProfileStore();
 
@@ -20,8 +20,8 @@ onMounted(() => {
 <template>
   <div class="main-panel-container">
     <div class="compose-area-container">
-      <dynamic-component :structure="composeStructure?.left ?? defaultLeft"/>
-      <dynamic-component :structure="composeStructure?.right ?? defaultRight"/>
+      <DynamicComponentColumn :structure="composeStructure?.left ?? defaultLeft"/>
+      <DynamicComponentColumn :structure="composeStructure?.right ?? defaultRight"/>
     </div>
     <div class="notify-area-container">
       Hello World

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import {computed} from "vue";
 import {useCurrentProfileStore} from "../plugins/store.ts";
-import AssistantFace from "../components/AssistantFace.vue";
-import QAQueueView from "../components/QAQueueView.vue";
+import AssistantFace from "./AssistantFace.vue";
+import QAQueueView from "./QAQueueView.vue";
 
 const currentProfile = useCurrentProfileStore();
 const assistantActive = computed(() => currentProfile.assistant.active)
