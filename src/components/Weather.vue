@@ -89,9 +89,6 @@ const region = computed(() => weatherInfo.value?.result.alert.adcodes.map(e => e
         <div class="small-content-font">
           {{ weatherInfo.result.hourly.description }}
         </div>
-        <div class="small-content-font">
-          {{ weatherInfo.result.minutely.description }}
-        </div>
       </div>
     </div>
   </div>
