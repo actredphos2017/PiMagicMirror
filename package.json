@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@popperjs/core": "^2.11.8",
+    "@types/qrcode": "^1.5.5",
     "electron": "^30.0.1",
     "electron-builder": "^24.13.3",
     "electron-devtools-installer": "^3.2.0",
