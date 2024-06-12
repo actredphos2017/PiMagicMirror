@@ -7,12 +7,13 @@ app.whenReady().then(() => {
         fullscreen: true,
         simpleFullscreen: true,
         webPreferences: {
-            nodeIntegration: true
+            nodeIntegration: true,
+            webSecurity: false
         }
     });
 
     mainWindow.setMenu(null);
-    mainWindow.webContents.openDevTools();
+    // mainWindow.webContents.openDevTools();
 
     // You can use `process.env.VITE_DEV_SERVER_URL` when the vite command is called `serve`
     if (process.env.VITE_DEV_SERVER_URL) {

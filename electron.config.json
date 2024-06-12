@@ -1,0 +1,9 @@
+{
+  "files": [
+    "dist-electron/main.js",
+    "dist"
+  ],
+  "directories": {
+    "output": "build"
+  }
+}

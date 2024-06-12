@@ -1,19 +1,14 @@
-import { app, BrowserWindow } from "electron";
-app.whenReady().then(() => {
-  const mainWindow = new BrowserWindow({
+import { app as n, BrowserWindow as l } from "electron";
+n.whenReady().then(() => {
+  const e = new l({
     title: "MAGIC MIRROR",
-    fullscreenable: true,
-    fullscreen: true,
-    simpleFullscreen: true,
+    fullscreenable: !0,
+    fullscreen: !0,
+    simpleFullscreen: !0,
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: !0,
+      webSecurity: !1
     }
   });
-  mainWindow.setMenu(null);
-  mainWindow.webContents.openDevTools();
-  if (process.env.VITE_DEV_SERVER_URL) {
-    mainWindow.loadURL(process.env.VITE_DEV_SERVER_URL);
-  } else {
-    mainWindow.loadFile("dist/index.html");
-  }
+  e.setMenu(null), process.env.VITE_DEV_SERVER_URL ? e.loadURL(process.env.VITE_DEV_SERVER_URL) : e.loadFile("dist/index.html");
 });

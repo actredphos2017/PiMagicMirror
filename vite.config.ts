@@ -12,4 +12,5 @@ export default defineConfig({
           entry: 'electron/main.ts',
         }),
     ],
+    base: './'
 })

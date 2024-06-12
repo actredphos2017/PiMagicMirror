@@ -6,13 +6,12 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "electron:build": "vue-tsc && vite build && electron-builder --config electron.config.json"
   },
   "dependencies": {
     "@popperjs/core": "^2.11.8",
     "@types/qrcode": "^1.5.5",
-    "electron": "^30.0.1",
-    "electron-builder": "^24.13.3",
     "electron-devtools-installer": "^3.2.0",
     "pinia": "^2.1.7",
     "qrcode": "^1.5.3",
@@ -24,7 +23,9 @@
     "@vitejs/plugin-vue": "^5.0.4",
     "typescript": "^5.2.2",
     "vite": "^5.2.0",
-    "vue-tsc": "^2.0.6"
+    "vue-tsc": "^2.0.6",
+    "electron": "^30.0.1",
+    "electron-builder": "^24.13.3"
   },
   "main": "dist-electron/main.js"
 }
