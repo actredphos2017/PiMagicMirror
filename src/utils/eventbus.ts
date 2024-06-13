@@ -64,6 +64,11 @@ const eventRouter: EventRouter = {
     },
 }
 
+export function onExternalConnectionOpen() {
+    useCurrentProfileStore().assistant.active = false
+    setTimeout(() => useCurrentProfileStore().clearQA(), 600)
+}
+
 export function routeExternalEvent(event: ExternalEvent) {
     console.log("Receive Event:", event.event)
     const fun = eventRouter[event.event];

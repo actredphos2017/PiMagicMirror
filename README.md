@@ -41,3 +41,20 @@ npm i -r
 
 npm run dev
 ```
+
+### Buhttps://github.com/actredphos2017/PiMagicMirrorServer/commit/c14111f23c108ae4dc2f6f487da094aa2cc16411ild Deploy
+
+Build the project
+``` sh
+git clone https://github.com/actredphos2017/PiMagicMirror.git
+cd PiMagicMirror
+
+npm i -r
+
+npm run electron:build
+```
+
+Run
+``` sh
+
+```

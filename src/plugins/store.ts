@@ -1,5 +1,5 @@
 import {defineStore} from "pinia"
-import {routeExternalEvent, sendExternalEvent} from "../utils/eventbus.ts";
+import {onExternalConnectionOpen, routeExternalEvent, sendExternalEvent} from "../utils/eventbus.ts";
 import {BluetoothAdvertiseInfo, ExternalEvent} from "../models/event.ts";
 import {UserProfile} from "../models/custom.ts";
 import {Comprehensive} from "../models/caiyunapi/comprehensive.ts";
@@ -75,6 +75,7 @@ export const useAsyncConnectionStore = defineStore({
             this.websocket = new WebSocket("ws://localhost:8083")
             this.websocket.onopen = () => {
                 console.log('Websocket Connected')
+                onExternalConnectionOpen()
             }
             this.websocket.onmessage = (e) => {
                 routeExternalEvent(JSON.parse(e.data) as ExternalEvent)
